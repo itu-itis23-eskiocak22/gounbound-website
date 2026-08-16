@@ -17,7 +17,10 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "UNBOUND | Go beyond your bounds",
+  title: {
+    default: "UNBOUND | Go beyond your bounds",
+    template: "%s | UNBOUND",
+  },
   description:
     "UNBOUND is the outdoor community that helps you discover new experiences, learn how to start, connect with people and keep your adventures alive.",
   keywords: [
@@ -31,12 +34,37 @@ export const metadata: Metadata = {
     "camping",
     "discover",
   ],
+  authors: [{ name: "UNBOUND" }],
+  creator: "UNBOUND",
+  publisher: "UNBOUND",
+  alternates: {
+    canonical: "https://gounbound.app",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     title: "UNBOUND | Go beyond your bounds",
     description:
       "Discover outdoor experiences. Learn how to start. Find your people. Keep the memory alive.",
     url: "https://gounbound.app",
     siteName: "UNBOUND",
+    images: [
+      {
+        url: "https://gounbound.app/og-image.jpg", // Make sure to add a real og-image.jpg
+        width: 1200,
+        height: 630,
+        alt: "UNBOUND - Go beyond your bounds",
+      },
+    ],
     type: "website",
     locale: "en_US",
   },
@@ -45,11 +73,21 @@ export const metadata: Metadata = {
     title: "UNBOUND | Go beyond your bounds",
     description:
       "Discover outdoor experiences. Learn how to start. Find your people. Keep the memory alive.",
+    creator: "@gounbound", // Replace with actual Twitter handle if exists
+    images: ["https://gounbound.app/og-image.jpg"],
   },
   metadataBase: new URL("https://gounbound.app"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "UNBOUND",
+    url: "https://gounbound.app",
+    description: "Discover outdoor experiences. Learn how to start. Find your people. Keep the memory alive.",
+  };
+
   return (
     <html
       lang="en"
@@ -61,6 +99,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `document.documentElement.classList.add('js');`,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
