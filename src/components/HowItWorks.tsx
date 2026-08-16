@@ -8,14 +8,14 @@ const steps = [
     number: "01",
     title: "Discover",
     description:
-      "Explore activities, places and lessons that match your interests.",
+      "Find something that makes you curious.",
     image: "/images/discover-step.jpg",
     alt: "Person studying a topographic trail map on a wooden table with compass and notebook",
   },
   {
     number: "02",
     title: "Learn",
-    description: "Follow step-by-step lessons and improve your skills.",
+    description: "Start with the basics and build confidence.",
     image: "/images/learn-step.jpg",
     alt: "Climbing instructor teaching a beginner student on outdoor bouldering wall",
   },
@@ -23,7 +23,7 @@ const steps = [
     number: "03",
     title: "Connect",
     description:
-      "Join a community of adventurers, meet people and get inspired.",
+      "Find people, clubs and instructors.",
     image: "/images/connect-step.jpg",
     alt: "Group of friends gathered around campfire at dusk in the mountains",
   },
@@ -31,7 +31,7 @@ const steps = [
     number: "04",
     title: "Share",
     description:
-      "Record your adventures, inspire others and keep the memories alive.",
+      "Document what you experienced.",
     image: "/images/share-step.jpg",
     alt: "Person journaling on a cliff edge at sunset overlooking mountain valley",
   },

@@ -44,12 +44,10 @@ export function Hero() {
           </h1>
 
           <p className="reveal reveal-delay-2 text-text-secondary text-lg md:text-xl leading-relaxed max-w-xl mb-10">
-            UNBOUND is the outdoor community that helps you discover new
-            experiences, learn how to start, connect with people and keep your
-            adventures alive.
+            UNBOUND is the outdoor community that helps you discover new experiences, learn how to start, connect with people and keep your adventures alive.
           </p>
 
-          <div className="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4">
+          <div className="reveal reveal-delay-3 flex flex-col sm:flex-row gap-4 mb-16">
             <a href="#waitlist" className="btn-primary text-base px-8 py-4">
               Join Waitlist
               <svg
@@ -66,9 +64,19 @@ export function Hero() {
                 />
               </svg>
             </a>
-            <a href="#features" className="btn-secondary text-base px-8 py-4">
-              Explore the App
+            <a href="#how-it-works" className="btn-secondary text-base px-8 py-4">
+              See how it works
             </a>
+          </div>
+
+          <div className="reveal reveal-delay-4 flex gap-6 text-sm font-medium text-text-secondary">
+            <span>Discover</span>
+            <span className="text-text-tertiary">·</span>
+            <span>Learn</span>
+            <span className="text-text-tertiary">·</span>
+            <span>Connect</span>
+            <span className="text-text-tertiary">·</span>
+            <span>Share</span>
           </div>
         </div>
       </div>

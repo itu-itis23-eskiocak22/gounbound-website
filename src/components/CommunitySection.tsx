@@ -7,10 +7,13 @@ const stories = [
   {
     title: "Weekend escape to Kaçkarlar",
     location: "Kaçkarlar, Rize",
-    date: "July 2026",
+    date: "12 Aug 2026",
     author: "Deniz K.",
     excerpt:
       "Three days traversing the highland meadows above Ayder. We camped by glacial lakes and watched the clouds roll through the valleys below. The trail from Elevit was steeper than expected but the views made every step worth it.",
+    learnings: "Pack lighter for the steep inclines. The glacial lakes are freezing, but a quick dip is worth the shock.",
+    changes: "I'd bring better rain gear. The weather turns quickly at 3000m.",
+    recommend: "Absolutely. One of the most untouched landscapes I've seen.",
     image: "/images/camping.jpg",
     likes: 24,
     comments: 8,
@@ -18,10 +21,10 @@ const stories = [
   {
     title: "First ascent at Geyikbayırı",
     location: "Geyikbayırı, Antalya",
-    date: "June 2026",
+    date: "5 Jun 2026",
     author: "Can M.",
     excerpt:
-      "Finally made it to the legendary climbing walls of Geyikbayırı. Started on some 5a routes and worked up to a challenging 6a by the third day. The community at the campsite was incredibly welcoming.",
+      "Finally made it to the legendary climbing walls of Geyikbayırı. Started on some 5a routes and worked up to a challenging 6a by the third day.",
     image: "/images/climbing.jpg",
     likes: 31,
     comments: 12,
@@ -73,72 +76,65 @@ export function CommunitySection() {
         </div>
 
         {/* Activity Reports */}
-        <div className="grid md:grid-cols-2 gap-8 mb-20">
-          {stories.map((story, i) => (
-            <div
-              key={story.title}
-              className={`reveal reveal-delay-${i + 1} group bg-surface-elevated rounded-2xl border border-text-primary/6 overflow-hidden card-hover`}
-            >
-              {/* Image */}
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <Image
-                  src={story.image}
-                  alt={story.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-forest/10 flex items-center justify-center text-xs font-bold text-forest">
-                    {story.author.charAt(0)}
+        <div className="mb-20">
+          {/* Featured Report */}
+          <div className="reveal group bg-surface-elevated rounded-3xl border border-text-primary/6 overflow-hidden mb-8">
+            <div className="relative aspect-[21/9] md:aspect-[24/9] w-full overflow-hidden">
+              <img
+                src={stories[0].image}
+                alt={stories[0].title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+              />
+            </div>
+            
+            <div className="p-8 md:p-12 md:max-w-4xl mx-auto">
+              <h3 className="heading-display text-3xl md:text-4xl mb-2">{stories[0].title}</h3>
+              <p className="text-text-secondary text-sm mb-8 font-medium tracking-wide uppercase">
+                {stories[0].location} <span className="mx-2">·</span> {stories[0].date}
+              </p>
+              
+              <div className="prose prose-lg text-text-secondary max-w-none">
+                <p className="mb-8 text-lg">{stories[0].excerpt}</p>
+                
+                <div className="grid md:grid-cols-3 gap-8 mt-10">
+                  <div>
+                    <h4 className="text-text-primary font-bold text-sm uppercase tracking-wider mb-3">What I learned</h4>
+                    <p className="text-sm">{stories[0].learnings}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-text-primary">
-                      {story.author}
-                    </p>
-                    <p className="text-xs text-text-tertiary">{story.date}</p>
+                    <h4 className="text-text-primary font-bold text-sm uppercase tracking-wider mb-3">What I'd change</h4>
+                    <p className="text-sm">{stories[0].changes}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-text-primary font-bold text-sm uppercase tracking-wider mb-3">Recommend it?</h4>
+                    <p className="text-sm">{stories[0].recommend}</p>
                   </div>
                 </div>
+              </div>
 
-                <h3 className="font-semibold text-text-primary text-lg mb-1">
-                  {story.title}
-                </h3>
-                <p className="text-sm text-text-secondary mb-1">
-                  {story.location}
-                </p>
-                <p className="text-sm text-text-secondary leading-relaxed mt-3 line-clamp-3">
-                  {story.excerpt}
-                </p>
-
-                {/* Actions */}
-                <div className="flex items-center gap-6 mt-5 pt-4 border-t border-text-primary/6">
-                  <button className="flex items-center gap-1.5 text-text-secondary hover:text-forest transition-colors text-sm">
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                    </svg>
-                    {story.likes}
-                  </button>
-                  <button className="flex items-center gap-1.5 text-text-secondary hover:text-forest transition-colors text-sm">
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
-                    </svg>
-                    {story.comments}
-                  </button>
-                  <button className="flex items-center gap-1.5 text-text-secondary hover:text-forest transition-colors text-sm ml-auto">
-                    <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                    </svg>
-                    Save
-                  </button>
+              {/* Actions */}
+              <div className="flex items-center gap-6 mt-10 pt-6 border-t border-text-primary/6">
+                <div className="flex items-center gap-3 mr-auto">
+                  <div className="w-10 h-10 rounded-full bg-forest/10 flex items-center justify-center font-bold text-forest">
+                    {stories[0].author.charAt(0)}
+                  </div>
+                  <span className="font-medium text-text-primary text-sm">{stories[0].author}</span>
                 </div>
+                <button className="flex items-center gap-1.5 text-text-secondary hover:text-forest transition-colors text-sm">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                  {stories[0].likes}
+                </button>
+                <button className="flex items-center gap-1.5 text-text-secondary hover:text-forest transition-colors text-sm">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" /></svg>
+                  {stories[0].comments}
+                </button>
+                <button className="flex items-center gap-1.5 text-text-secondary hover:text-forest transition-colors text-sm ml-4">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+                  Save
+                </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Editorial / Blog Section */}

@@ -28,7 +28,7 @@ export function Logo({
       <img
         src="/logo.png"
         alt="UNBOUND Logo"
-        className={`${s.icon} rounded-sm`}
+        className={`${s.icon}`}
       />
       {showText && (
         <span

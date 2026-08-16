@@ -18,11 +18,11 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "UNBOUND | Go beyond your bounds",
+    default: "UNBOUND — Go beyond your bounds.",
     template: "%s | UNBOUND",
   },
   description:
-    "UNBOUND is the outdoor community that helps you discover new experiences, learn how to start, connect with people and keep your adventures alive.",
+    "Discover outdoor hobbies, learn how to start, find places and people, and document your adventures with UNBOUND.",
   keywords: [
     "outdoor",
     "adventure",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "UNBOUND | Go beyond your bounds",
+    title: "UNBOUND — Go beyond your bounds.",
     description:
-      "Discover outdoor experiences. Learn how to start. Find your people. Keep the memory alive.",
+      "Discover outdoor hobbies, learn how to start, find places and people, and document your adventures with UNBOUND.",
     url: "https://gounbound.app",
     siteName: "UNBOUND",
     images: [
@@ -70,9 +70,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UNBOUND | Go beyond your bounds",
+    title: "UNBOUND — Go beyond your bounds.",
     description:
-      "Discover outdoor experiences. Learn how to start. Find your people. Keep the memory alive.",
+      "Discover outdoor hobbies, learn how to start, find places and people, and document your adventures with UNBOUND.",
     creator: "@gounbound", // Replace with actual Twitter handle if exists
     images: ["https://gounbound.app/og-image.jpg"],
   },
@@ -85,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@type": "WebSite",
     name: "UNBOUND",
     url: "https://gounbound.app",
-    description: "Discover outdoor experiences. Learn how to start. Find your people. Keep the memory alive.",
+    description: "Discover outdoor hobbies, learn how to start, find places and people, and document your adventures with UNBOUND.",
   };
 
   return (

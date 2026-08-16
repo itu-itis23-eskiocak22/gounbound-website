@@ -15,7 +15,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-forest text-white pt-20 pb-10" role="contentinfo">
+    <footer className="bg-black text-white pt-20 pb-10" role="contentinfo">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-14 border-b border-white/10">
           {/* Brand Column */}

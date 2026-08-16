@@ -5,12 +5,16 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
 
 const categories = [
-  { label: "All", icon: "◆" },
-  { label: "Water", icon: "〰" },
-  { label: "Air", icon: "↗" },
-  { label: "Mountain", icon: "△" },
-  { label: "Land", icon: "◇" },
-  { label: "Winter", icon: "❄" },
+  { label: "Climbing", icon: "⛰" },
+  { label: "Surfing", icon: "🏄" },
+  { label: "Paragliding", icon: "🪂" },
+  { label: "Diving", icon: "🤿" },
+  { label: "Hiking", icon: "🚶" },
+  { label: "Camping", icon: "⛺" },
+];
+
+const filters = [
+  "Water", "Air", "Mountain", "Land", "Winter", "Beginner", "Intermediate", "Advanced"
 ];
 
 const experiences = [
@@ -65,13 +69,12 @@ export function DiscoverSection() {
         <div className="reveal max-w-2xl mb-16">
           <p className="text-meta text-sage mb-4">DISCOVER</p>
           <h2 className="heading-section text-4xl md:text-5xl lg:text-[3.5rem] mb-6">
-            Find experiences
+            What do you want
             <br />
-            that move you.
+            to try?
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            From mountains to oceans, discover places, lessons and experiences
-            that inspire your next adventure.
+            Discover outdoor activities, places, lessons and experiences that can turn curiosity into your next adventure.
           </p>
         </div>
 
@@ -102,20 +105,32 @@ export function DiscoverSection() {
             </div>
           </div>
 
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2">
+          {/* Activity Categories */}
+          <div className="flex flex-wrap gap-3 mb-6">
             {categories.map((cat) => (
               <button
                 key={cat.label}
                 onClick={() => setActiveCategory(cat.label)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-5 py-3 rounded-2xl flex flex-col items-center gap-2 text-sm font-medium transition-all duration-300 ${
                   activeCategory === cat.label
                     ? "bg-forest text-white"
-                    : "bg-surface-elevated text-text-secondary hover:text-forest border border-text-primary/8"
+                    : "bg-surface-elevated text-text-secondary hover:text-forest border border-text-primary/8 hover:border-forest/30"
                 }`}
               >
-                <span className="mr-1.5">{cat.icon}</span>
+                <span className="text-2xl">{cat.icon}</span>
                 {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Additional Filters */}
+          <div className="flex flex-wrap gap-2">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                className="px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 bg-surface-elevated text-text-tertiary hover:text-text-secondary border border-text-primary/8"
+              >
+                {filter}
               </button>
             ))}
           </div>

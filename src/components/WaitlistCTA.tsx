@@ -1,15 +1,25 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import Image from "next/image";
 
 export function WaitlistCTA() {
   const ref = useScrollReveal();
 
   return (
     <section id="waitlist" className="bg-forest py-24 md:py-32 relative overflow-hidden" ref={ref}>
-      {/* Decorative */}
-      <div className="absolute -right-60 -top-60 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
-      <div className="absolute -left-40 bottom-0 w-80 h-80 bg-forest-dark rounded-full blur-3xl" />
+      {/* Cinematic Background */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero.jpg"
+          alt="Outdoor landscape"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-forest/80 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest to-forest/50" />
+      </div>
 
       <div className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10 text-center">
         <div className="reveal">
@@ -45,22 +55,6 @@ export function WaitlistCTA() {
           </form>
         </div>
 
-        {/* Reassurance */}
-        <div className="reveal reveal-delay-2 flex flex-wrap justify-center gap-6 mt-8">
-          {[
-            { icon: "✦", text: "Early access" },
-            { icon: "✦", text: "Updates & news" },
-            { icon: "✦", text: "No spam" },
-          ].map((item) => (
-            <div
-              key={item.text}
-              className="flex items-center gap-2 text-white/40 text-sm"
-            >
-              <span className="text-sage text-xs">{item.icon}</span>
-              {item.text}
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

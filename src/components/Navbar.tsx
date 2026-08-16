@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Logo } from "./Logo";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Features", href: "#features" },
+  { label: "Discover", href: "#discover" },
+  { label: "How it works", href: "#how-it-works" },
   { label: "Community", href: "#community" },
   {
     label: "For Partners",

@@ -10,11 +10,11 @@ const activityIcons = [
 ];
 
 const bucketList = [
-  { text: "First dive in Kaş", completed: true, linked: true },
-  { text: "Summit Hasan Dağı", completed: false },
-  { text: "Paraglide in Fethiye", completed: false },
-  { text: "Kayak the Dalyan river", completed: false },
-  { text: "Camp under the stars in Cappadocia", completed: false },
+  { text: "Kaş'ta ilk dalışımı yapmak", completed: true, linked: true },
+  { text: "Hasan Dağı'na çıkmak", completed: false },
+  { text: "Fethiye'de yamaç paraşütü yapmak", completed: false },
+  { text: "Dalyan nehrinde kano yapmak", completed: false },
+  { text: "Kapadokya'da kamp yapmak", completed: false },
 ];
 
 const timelineEntry = {
@@ -36,14 +36,12 @@ export function ProfilePreview() {
           <div className="reveal">
             <p className="text-meta text-sage mb-4">YOUR PROFILE</p>
             <h2 className="heading-section text-3xl md:text-4xl lg:text-[2.75rem] mb-6">
-              Your outdoor life,
+              Your profile is
               <br />
-              your journal.
+              your journey.
             </h2>
             <p className="text-text-secondary text-lg leading-relaxed mb-8">
-              Your profile is your personal outdoor journal — not a conventional
-              social media page. It reflects who you are, what you&apos;ve experienced,
-              and what you dream of doing next.
+              Your outdoor life becomes a living record of the places you've been, the things you've tried and the experiences you want to chase next.
             </p>
 
             <div className="space-y-4">
@@ -86,9 +84,9 @@ export function ProfilePreview() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-text-primary text-lg">
-                      Deniz Kaya
+                      Ali Berk
                     </h3>
-                    <p className="text-text-tertiary text-sm">@denizkaya</p>
+                    <p className="text-text-tertiary text-sm">@aliberk</p>
                     <p className="text-text-secondary text-sm mt-1">
                       Mountains are my therapy. Always looking for the next summit.
                     </p>
@@ -96,6 +94,11 @@ export function ProfilePreview() {
                       📍 Istanbul, Turkey
                     </p>
                   </div>
+                </div>
+
+                {/* Following link */}
+                <div className="mt-2 text-xs text-text-tertiary cursor-pointer hover:text-forest transition-colors inline-block">
+                  Takip ettiklerin →
                 </div>
 
                 {/* Activity Icons */}
@@ -140,7 +143,7 @@ export function ProfilePreview() {
                         </span>
                         {item.completed && item.linked && (
                           <span className="text-xs text-forest ml-2 cursor-pointer hover:underline">
-                            View experience →
+                            Deneyimi gör →
                           </span>
                         )}
                       </div>
@@ -161,10 +164,12 @@ export function ProfilePreview() {
                   </span>
                 </div>
                 <div className="bg-paper rounded-xl p-4">
-                  <div className="aspect-[16/9] rounded-lg bg-sage/20 mb-3 overflow-hidden relative">
-                    <div className="absolute inset-0 flex items-center justify-center text-sage/50 text-3xl">
-                      🏕
-                    </div>
+                  <div className="aspect-[16/9] rounded-lg mb-3 overflow-hidden relative">
+                    <img
+                      src="/images/camping.jpg"
+                      alt="Timeline report"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h5 className="font-semibold text-text-primary text-sm">
                     {timelineEntry.title}
@@ -176,7 +181,7 @@ export function ProfilePreview() {
                     {timelineEntry.excerpt}
                   </p>
                   <span className="text-xs text-forest mt-2 inline-block cursor-pointer hover:underline">
-                    Read more →
+                    Devamını oku →
                   </span>
                 </div>
               </div>
