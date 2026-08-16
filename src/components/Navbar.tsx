@@ -48,19 +48,19 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-          <div className="flex justify-between h-20 items-center">
+          <div className="flex justify-between h-20 items-center relative">
             {/* Logo */}
-            <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="-ml-4 lg:-ml-6">
               <Logo color={scrolled ? "forest" : "forest"} />
             </a>
 
             {/* Center Links */}
-            <div className="hidden lg:flex items-center gap-10">
+            <div className="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="relative text-text-secondary hover:text-forest font-medium text-[0.9375rem] transition-colors duration-300"
+                  className="relative text-text-secondary hover:text-forest font-medium text-lg transition-colors duration-300"
                 >
                   {link.label}
                   {link.badge && (

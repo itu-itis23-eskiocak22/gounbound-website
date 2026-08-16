@@ -54,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       className={`${commissioner.variable} ${playfair.variable} h-full`}
+      suppressHydrationWarning
     >
       <head>
         <script
