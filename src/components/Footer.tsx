@@ -8,8 +8,10 @@ const footerLinks = {
     { label: "For Partners", href: "#partners" },
   ],
   legal: [
-    { label: "Privacy", href: "#" },
-    { label: "Terms", href: "#" },
+    { label: "Gizlilik Politikası", href: "/gizlilik/" },
+    { label: "Kullanıcı Sözleşmesi", href: "/kullanim-kosullari/" },
+    { label: "KVKK Aydınlatma Metni", href: "/kvkk/" },
+    { label: "Hesap Silme", href: "/hesap-silme/" },
   ],
 };
 

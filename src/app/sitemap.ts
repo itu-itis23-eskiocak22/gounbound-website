@@ -10,6 +10,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    // Add more URLs here as the app grows
+    ...["kullanim-kosullari", "gizlilik", "kvkk", "hesap-silme"].map((path) => ({
+      url: `https://gounbound.app/${path}/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.3,
+    })),
   ];
 }
