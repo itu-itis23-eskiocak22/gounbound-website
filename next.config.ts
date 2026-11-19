@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
+  // Her dilin kendi kök düzeni var (app/(tr), app/en); ortak 404 için gerekli.
+  experimental: { globalNotFound: true },
   trailingSlash: true,
   images: {
     unoptimized: true,

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "../Logo";
+import { LangSwitch } from "../site/LangSwitch";
 
 export const LEGAL_LINKS = [
   { href: "/kullanim-kosullari/", label: "Kullanıcı Sözleşmesi" },
@@ -17,9 +18,12 @@ export function LegalShell({ children }: { children: React.ReactNode }) {
           <Link href="/" aria-label="Ana sayfa">
             <Logo size="small" />
           </Link>
-          <Link href="/" className="text-sm text-text-secondary hover:text-forest transition-colors">
-            Ana sayfa
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/" className="text-sm text-text-secondary hover:text-forest transition-colors">
+              Ana sayfa
+            </Link>
+            <LangSwitch />
+          </div>
         </div>
       </header>
 
