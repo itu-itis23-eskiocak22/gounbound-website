@@ -1,5 +1,6 @@
 // Faaliyet raporları canlı olarak Supabase'den okunur (yalnızca yayımlanmış raporlar, herkese açık anon anahtar).
 import { locale, t, type Lang } from "@/i18n";
+import { SUPABASE_PUBLIC } from "./supabasePublic";
 
 // Uygulamadaki experienceService ile aynı sorgu. Yazma işlemi yok: rapor paylaşmak uygulamaya özel.
 
@@ -17,8 +18,8 @@ export type Report = {
   locations: { id: number; name: string; type: string } | null;
 };
 
-const URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const URL = process.env.NEXT_PUBLIC_SUPABASE_URL || SUPABASE_PUBLIC.url;
+const KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || SUPABASE_PUBLIC.publishableKey;
 
 export const reportsConfigured = Boolean(URL && KEY);
 

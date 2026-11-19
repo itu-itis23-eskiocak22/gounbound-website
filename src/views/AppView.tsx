@@ -5,7 +5,7 @@ import { LogoMark } from "@/components/Logo";
 import { DATA_CONTROLLER } from "@/legal/company";
 import { places, sports } from "@/lib/catalog";
 import { localePath, type Lang } from "@/i18n";
-import { MapScreen, NotificationScreen, ProfileScreen, ShareScreen } from "./PhoneMockups";
+import { PhoneShot, ScreenGallery, type ScreenKey } from "./AppScreens";
 
 type Feature = { eyebrow: string; title: string; text: string; points: string[] };
 
@@ -13,6 +13,7 @@ const COPY = {
   tr: {
     meta: "Unbound mobil uygulaması: harita, çevrimdışı rehberler, faaliyet raporu paylaşımı, takip, beğeni ve hava durumu bildirimleri. Yakında App Store ve Google Play'de.",
     soon: "Yakında",
+    galleryEyebrow: "Uygulamadan ekranlar", galleryTitle: "Gerçek ekranlar, maket değil.", galleryText: "Aşağıdakiler test sürümünden alınmış ekran görüntüleri. Yana kaydırarak hepsine göz atabilirsin.",
     lead: "Doğa ve macera sporlarında keşfet, öğren, git ve paylaş. Web sitesinde gördüğün her şey, üstüne seni sporcularla buluşturan bir topluluk ve cebinde çalışan rehberler.",
     platforms: "Android ve iOS · Ücretsiz · Türkçe",
     stats: [
@@ -68,6 +69,7 @@ const COPY = {
   en: {
     meta: "The Unbound mobile app: map, offline guides, activity reports, following, likes and weather alerts for outdoor sports in Turkey. Coming soon to the App Store and Google Play.",
     soon: "Coming soon",
+    galleryEyebrow: "Screens from the app", galleryTitle: "Real screens, not mock-ups.", galleryText: "These are screenshots from the test build (the app is in Turkish). Scroll sideways to see them all.",
     lead: "Discover, learn, go and share in outdoor and adventure sports. Everything on this website, plus a community that connects you with other athletes and guides that work in your pocket.",
     platforms: "Android & iOS · Free · App language: Turkish",
     stats: [
@@ -159,7 +161,7 @@ function FeatureBlock({ f, phone, reverse = false }: { f: Feature; phone: React.
 
 export function AppView({ lang }: { lang: Lang }) {
   const c = COPY[lang];
-  const phones = [<MapScreen key="m" />, <ShareScreen key="s" />, <ProfileScreen key="p" />, <NotificationScreen key="n" />];
+  const phoneScreens: ScreenKey[] = ["map", "share-form", "profile", "notifications"];
   return (
     <SiteShell lang={lang}>
       <section className="relative overflow-hidden bg-ink text-paper">
@@ -174,9 +176,9 @@ export function AppView({ lang }: { lang: Lang }) {
             <div className="mt-9"><StoreBadges dark lang={lang} /></div>
             <p className="mt-5 text-sm text-paper/45">{c.platforms}</p>
           </div>
-          <div className="hidden sm:flex justify-center gap-6 translate-y-16 -mt-8" lang="tr" aria-hidden="true">
-            <div className="hidden xl:block translate-y-10 opacity-90"><NotificationScreen /></div>
-            <MapScreen />
+          <div className="hidden sm:flex justify-center gap-6 translate-y-16 -mt-8" lang="tr">
+            <div className="hidden xl:block translate-y-10 opacity-90"><PhoneShot screen="guide" lang={lang} priority /></div>
+            <PhoneShot screen="home" lang={lang} priority />
           </div>
         </div>
       </section>
@@ -193,7 +195,14 @@ export function AppView({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      {c.features.map((f, i) => <FeatureBlock key={f.eyebrow} f={f} phone={<div lang="tr">{phones[i]}</div>} reverse={i % 2 === 1} />)}
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 pt-16">
+        <p className="text-meta text-olive mb-3">{c.galleryEyebrow}</p>
+        <h2 className="heading-section text-3xl sm:text-4xl text-ink mb-3">{c.galleryTitle}</h2>
+        <p className="text-text-secondary mb-10 max-w-2xl">{c.galleryText}</p>
+        <div lang="tr"><ScreenGallery lang={lang} /></div>
+      </section>
+
+      {c.features.map((f, i) => <FeatureBlock key={f.eyebrow} f={f} phone={<div lang="tr"><PhoneShot screen={phoneScreens[i]} lang={lang} /></div>} reverse={i % 2 === 1} />)}
 
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
         <div className="rounded-[2rem] bg-olive text-paper p-8 sm:p-14 grid gap-10 lg:grid-cols-2 items-center">

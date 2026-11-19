@@ -4,8 +4,12 @@ import { SportCard } from "@/components/site/SportCard";
 import { PlaceCard } from "@/components/site/PlaceCard";
 import { ReportFeed } from "@/components/site/ReportFeed";
 import { AppPromo } from "@/components/site/AppPromo";
+import { PlacesMap } from "@/components/site/PlacesMap";
+import { markerColor } from "@/lib/sportStyle";
 import { businessCount, places, provinceCount, sports, summarize } from "@/lib/catalog";
 import { localePath, type Lang } from "@/i18n";
+
+const LEGEND_SAMPLES = ["Yelken", "Hiking", "Kampçılık"];
 
 const COPY = {
   tr: {
@@ -23,7 +27,8 @@ const COPY = {
       ["Paylaş", "Döndüğünde faaliyet raporunu yaz. Senden sonra gidecekler, rehberde yazmayan ayrıntıyı senden öğrenir."],
     ],
     featEyebrow: "İlk deneyim için", featTitle: "İstanbul'a yakın, yeni başlayanlara uygun.", seeAll: "Tümünü gör →",
-    mapEyebrow: "Harita", mapTitle: "Yakınında ne var?", mapText: "Tüm işletme ve rotalar, spora göre renkli işaretlerle tek haritada.",
+    mapEyebrow: "Harita", mapTitle: "Yakınında ne var?", mapText: "Tüm işletme ve rotalar, spora göre renkli işaretlerle tek haritada. Bir işarete bas, rehberi aç.",
+    legend: ["Su sporları", "Kara ve doğa", "Kamp ve hava"], mapFull: "Filtreli tam harita →", mapHint: "Yakınlaştırmak için haritaya tıkla, sonra kaydır. Bazı alanlar kesin konum yayımlamadığından haritada yok.",
     finderEyebrow: "Ne yapsam?", finderTitle: "Üç soru, sana özel öneri.", finderText: "Zorluk, yol süresi ve ortam tercihine göre katalogdan sıralı öneriler.",
     finderChips: ["Görece kolay", "3 saate kadar", "Suda"],
     reportsEyebrow: "Faaliyet raporları", reportsTitle: "Sahadan son notlar.", allReports: "Tüm raporlar →",
@@ -43,7 +48,8 @@ const COPY = {
       ["Share", "Write an activity report when you're back. Whoever goes next learns the details no guide mentions."],
     ],
     featEyebrow: "For your first time", featTitle: "Close to Istanbul, beginner friendly.", seeAll: "See all →",
-    mapEyebrow: "Map", mapTitle: "What's near you?", mapText: "Every business and route on one map, colour-coded by sport.",
+    mapEyebrow: "Map", mapTitle: "What's near you?", mapText: "Every business and route on one map, colour-coded by sport. Tap a pin to open its guide.",
+    legend: ["Water sports", "Land & nature", "Camping & air"], mapFull: "Full map with filters →", mapHint: "Click the map to enable scroll zoom. Some sites don't publish an exact location, so they're not on the map.",
     finderEyebrow: "What should I do?", finderTitle: "Three questions, tailored suggestions.", finderText: "Ranked suggestions from the catalogue based on effort, travel time and setting.",
     finderChips: ["Fairly easy", "Up to 3 hours", "On water"],
     reportsEyebrow: "Activity reports", reportsTitle: "Latest notes from the field.", allReports: "All reports →",
@@ -58,6 +64,7 @@ export function HomeView({ lang }: { lang: Lang }) {
   const firstOfSport = pool.filter((p, i) => pool.findIndex((q) => q.sport === p.sport) === i);
   const featured = [...firstOfSport, ...pool.filter((p) => !firstOfSport.includes(p))].slice(0, 6).map((p) => summarize(p, lang));
   const stats = [sports.length, places.length, businessCount, provinceCount];
+  const mapPlaces = places.filter((p) => p.lat != null).map((p) => summarize(p, lang));
 
   return (
     <SiteShell lang={lang}>
@@ -127,26 +134,36 @@ export function HomeView({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-8 grid gap-5 lg:grid-cols-2">
-        <Link href={href("/harita/")} className="group card-hover relative overflow-hidden rounded-[2rem] bg-surface p-8 sm:p-10 min-h-72 flex flex-col justify-end">
-          <svg className="absolute inset-0 w-full h-full opacity-60" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            {([[60,70,"#1F5D78"],[120,110,"#2F5B45"],[200,60,"#2E3130"],[260,140,"#1F5D78"],[320,90,"#2F5B45"],[90,170,"#2E3130"],[180,190,"#1F5D78"],[300,200,"#2E3130"],[350,50,"#2F5B45"],[230,100,"#2E3130"]] as [number, number, string][]).map(([x, y, col], i) => (
-              <circle key={i} cx={x} cy={y} r="7" fill={col} stroke="#fff" strokeWidth="3" />
-            ))}
-          </svg>
-          <div className="relative">
-            <p className="text-meta text-olive mb-2">{c.mapEyebrow}</p>
-            <h3 className="heading-section text-3xl text-ink">{c.mapTitle}</h3>
-            <p className="mt-2 text-text-secondary max-w-sm">{c.mapText}</p>
+      <section className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+          <div>
+            <p className="text-meta text-olive mb-3">{c.mapEyebrow}</p>
+            <h2 className="heading-section text-4xl sm:text-5xl text-ink">{c.mapTitle}</h2>
+            <p className="mt-3 text-text-secondary max-w-xl">{c.mapText}</p>
           </div>
-        </Link>
-        <Link href={href("/ne-yapsam/")} className="group card-hover relative overflow-hidden rounded-[2rem] bg-olive text-paper p-8 sm:p-10 min-h-72 flex flex-col justify-end">
-          <div className="absolute top-8 right-8 flex flex-col gap-2 items-end opacity-80" aria-hidden="true">
+          <div className="flex flex-col items-end gap-3">
+            <ul className="flex flex-wrap gap-4 text-sm text-text-secondary">
+              {c.legend.map((label, i) => (
+                <li key={label} className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: markerColor(LEGEND_SAMPLES[i]) }} />{label}</li>
+              ))}
+            </ul>
+            <Link href={href("/harita/")} className="text-sm font-semibold text-ink hover:text-olive">{c.mapFull}</Link>
+          </div>
+        </div>
+        <PlacesMap lang={lang} places={mapPlaces} className="h-[420px] sm:h-[520px]" />
+        <p className="mt-2 text-xs text-muted">{c.mapHint}</p>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-8 mt-14">
+        <Link href={href("/ne-yapsam/")} className="group card-hover relative overflow-hidden rounded-[2rem] bg-olive text-paper p-8 sm:p-10 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div>
+            <p className="text-meta text-gold mb-2">{c.finderEyebrow}</p>
+            <h3 className="heading-section text-3xl">{c.finderTitle}</h3>
+            <p className="mt-2 text-paper/75 max-w-md">{c.finderText}</p>
+          </div>
+          <div className="flex flex-wrap gap-2" aria-hidden="true">
             {c.finderChips.map((x) => <span key={x} className="rounded-full bg-paper/15 px-3 py-1 text-sm">{x}</span>)}
           </div>
-          <p className="text-meta text-gold mb-2">{c.finderEyebrow}</p>
-          <h3 className="heading-section text-3xl">{c.finderTitle}</h3>
-          <p className="mt-2 text-paper/75 max-w-sm">{c.finderText}</p>
         </Link>
       </section>
 
