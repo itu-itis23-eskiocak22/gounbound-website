@@ -136,6 +136,10 @@ body {
 .prose-guide strong { font-weight: 600; color: var(--ink); }
 .prose-guide h4 { font-weight: 600; margin: 1rem 0 0.5rem; }
 
+/* Yatay kaydırılan çip satırları: kaydırma çubuğu gizli, kaydırma çalışır */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 details > summary { list-style: none; cursor: pointer; }
 details > summary::-webkit-details-marker { display: none; }
 details[open] .chevron { transform: rotate(180deg); }

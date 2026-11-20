@@ -65,7 +65,7 @@ export function ReportFeed({ lang = "tr", sport, locationIds, limit = 6, sportOp
   return (
     <div>
       {sportOptions && (
-        <div className="flex gap-2 overflow-x-auto pb-2 mb-6 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap" role="tablist" aria-label={d.filter}>
+        <div className="no-scrollbar flex gap-2 overflow-x-auto pb-2 mb-6 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap" role="tablist" aria-label={d.filter}>
           {[null, ...sportOptions].map((s) => (
             <button key={s ?? "all"} role="tab" aria-selected={(selected ?? null) === s} onClick={() => setSelected(s)}
               className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium border transition-colors ${(selected ?? null) === s ? "bg-ink text-paper border-ink" : "border-stone text-text-secondary hover:border-ink hover:text-ink"}`}>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { PlaceSummary } from "@/lib/catalog";
 import { ISTANBUL, recommend, type Coords, type Effort, type Environment, type Travel } from "@/lib/recommend";
 import { SportBadge } from "@/components/site/SportBadge";
@@ -22,10 +22,10 @@ const QUESTIONS = {
     env: { title: "Nerede olmak istersin?", options: [
       { value: "land", label: "Karada" }, { value: "water", label: "Suda" }, { value: "air", label: "Havada" }, { value: "any", label: "Fark etmez" }] } as Q<Environment>,
     origin: "Başlangıç noktası", center: "İstanbul merkez", centerDenied: "İstanbul merkez (konum izni verilmedi)", mine: "Konumun",
-    locating: "Konum alınıyor…", useMine: "Konumumu kullan", privacy: "{c.privacy}",
+    locating: "Konum alınıyor…", useMine: "Konumumu kullan", privacy: "Konumun yalnızca tarayıcında yol süresini tahmin etmek için kullanılır, hiçbir yere gönderilmez.",
     prompt: "Üç soruyu cevapla, sana uygun yerleri yol süresine göre sıralayalım.",
     none: "Bu tercihlere uyan bir yer bulamadık. Yol süresini artırmayı ya da \"Fark etmez\" seçeneğini dene.",
-    estimate: "{c.estimate}",
+    estimate: "Yol süreleri kuş uçuşu mesafeden yapılan kaba tahminlerdir; gerçek süre trafik ve güzergâha göre değişir.",
   },
   en: {
     effort: { title: "What kind of day do you want?", options: [
@@ -55,6 +55,15 @@ export function ActivityFinder({ places, lang = "tr" }: { places: PlaceSummary[]
   const [locating, setLocating] = useState(false);
 
   const done = effort && travel && environment;
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const wasDone = useRef(false);
+  // Telefonda sonuçlar soruların altında, ekran dışında kalır: üç soru ilk kez tamamlanınca sonuçlara kaydır.
+  useEffect(() => {
+    if (done && !wasDone.current && window.matchMedia("(max-width: 1023px)").matches) {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    wasDone.current = Boolean(done);
+  }, [done]);
   const results = useMemo(
     () => (done ? recommend(places, { effort, travel, environment }, origin, 12, lang) : []),
     [done, effort, travel, environment, origin, places, lang]);
@@ -83,7 +92,7 @@ export function ActivityFinder({ places, lang = "tr" }: { places: PlaceSummary[]
         <p className="text-xs text-muted -mt-4">{c.privacy}</p>
       </div>
 
-      <div className="lg:col-span-7 min-w-0" aria-live="polite">
+      <div ref={resultsRef} className="lg:col-span-7 min-w-0 scroll-mt-20" aria-live="polite">
         {!done ? (
           <div className="h-full min-h-72 rounded-3xl border-2 border-dashed border-stone flex items-center justify-center p-8 text-center text-text-secondary">
             {c.prompt}
@@ -98,18 +107,18 @@ export function ActivityFinder({ places, lang = "tr" }: { places: PlaceSummary[]
             <ol className="flex flex-col gap-3">
               {results.map((r, i) => (
                 <li key={r.place.slug}>
-                  <Link href={localePath(lang, `/mekanlar/${r.place.slug}/`)} className="card-hover flex gap-4 items-center rounded-2xl bg-white/70 border border-stone p-3 pr-5">
-                    <span className="w-8 text-center heading-section text-xl text-muted">{i + 1}</span>
+                  <Link href={localePath(lang, `/mekanlar/${r.place.slug}/`)} className="card-hover flex gap-3 sm:gap-4 items-center rounded-2xl bg-white/70 border border-stone p-3 pr-4 sm:pr-5">
+                    <span className="w-5 sm:w-8 shrink-0 text-center heading-section text-xl text-muted">{i + 1}</span>
                     {r.place.image && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={r.place.image} alt="" className="w-20 h-16 rounded-xl object-cover shrink-0" loading="lazy" />
+                      <img src={r.place.image} alt="" className="w-16 h-14 sm:w-20 sm:h-16 rounded-xl object-cover shrink-0" loading="lazy" />
                     )}
                     <span className="min-w-0 flex-1">
                       <span className="block font-semibold text-ink truncate">{r.place.name}</span>
                       <span className="block text-sm text-text-secondary truncate">{[r.place.district, r.place.region].filter(Boolean).join(", ")}</span>
                       <span className="block text-sm text-olive-dark mt-0.5">{r.reason}</span>
                     </span>
-                    <SportBadge sport={r.place.sport} lang={lang} className="hidden sm:inline-flex" />
+                    <span className="hidden sm:block shrink-0"><SportBadge sport={r.place.sport} lang={lang} /></span>
                   </Link>
                 </li>
               ))}

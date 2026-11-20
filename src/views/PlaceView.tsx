@@ -89,7 +89,6 @@ export function PlaceView({ place, lang }: { place: Place; lang: Lang }) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={place.image} alt="" className="w-full h-full object-cover" />
               </div>
-              {place.imageCaption && <figcaption className="mt-2 text-xs text-muted">{place.imageCaption}</figcaption>}
             </figure>
           )}
         </header>

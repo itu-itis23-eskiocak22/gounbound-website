@@ -69,6 +69,14 @@ export function PlacesMap({ lang = "tr", places, className = "h-[480px]", single
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, single, lang]);
 
+  // Kutu boyutu değişince (telefon döndürme, adres çubuğu, liste↔harita geçişi) Leaflet karoları yeniden hesaplasın.
+  useEffect(() => {
+    if (!el.current || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => map.current?.invalidateSize({ pan: false }));
+    ro.observe(el.current);
+    return () => ro.disconnect();
+  }, []);
+
   useEffect(() => () => { map.current?.remove(); map.current = null; }, []);
 
   return <div ref={el} className={`w-full rounded-3xl overflow-hidden border border-stone z-0 ${className}`} role="region" aria-label={d.label} tabIndex={0} />;

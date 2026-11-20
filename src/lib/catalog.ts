@@ -9,7 +9,6 @@ export type Sport = {
   slug: string;
   name: string;
   image: string;
-  imageCaption: string | null;
   beginnerGuide: { summary: string; reviewedAt: string; sections: GuideSection[] };
   reportFields: { key: string; label: string }[];
   placeLabel: string;
@@ -27,7 +26,6 @@ export type Place = {
   lat: number | null;
   lng: number | null;
   image: string | null;
-  imageCaption: string | null;
   summary: string | null;
   reviewedAt: string | null;
   sections: GuideSection[];

@@ -12,7 +12,7 @@ export const langFromPath = (pathname: string | null | undefined): Lang =>
   pathname === "/en" || pathname?.startsWith("/en/") ? "en" : "tr";
 
 /** Yalnızca Türkçe olan sayfalar (yasal metinler, e-posta onayı) */
-const TR_ONLY = ["/gizlilik/", "/kvkk/", "/kullanim-kosullari/", "/hesap-silme/", "/confirmed/"];
+const TR_ONLY = ["/gizlilik/", "/kvkk/", "/kullanim-kosullari/", "/hesap-silme/", "/confirmed/", "/gorsel-kaynaklari/"];
 
 /** Geçerli sayfanın diğer dildeki adresi; karşılığı yoksa o dilin ana sayfası. */
 export function switchPath(pathname: string, target: Lang): string {
@@ -61,7 +61,7 @@ export const dict = {
     promo: { eyebrow: "Unbound App · Yakında", title: "Daha fazlası mobil uygulamada", text: "Kendi faaliyet raporlarını fotoğraflarla paylaş, sporcuları takip et, beğendiğin raporları kaydet, hafta sonu havası uygun olduğunda bildirim al. Hepsi cebinde, çevrimdışı rehberlerle birlikte.", discover: "Uygulamayı keşfet →", soon: "Yakında" },
     chips: { beginner: "Yeni başlayanlara uygun", tandem: "Tandem", tandemLong: "Tandem hizmeti var", nearIstanbul: "İstanbul'a yakın" },
     card: { places: "mekan", guide: "başlangıç rehberi", tandemOffered: "Tandem uçuş yayımlanmış" },
-    explorer: { search: "İşletme, rota, il veya ilçe ara", allSports: "Tüm sporlar", allRegions: "Tüm bölgeler", near: "İstanbul ve çevresi", list: "Liste", map: "Harita", results: "sonuç", onMap: "haritada {n} konum (bazı alanlar kesin konum yayımlamıyor)", none: "Bu filtrelere uyan bir yer bulunamadı.", reset: "Filtreleri temizle", more: "Daha fazla göster", view: "Görünüm", sport: "Spor", region: "Bölge" },
+    explorer: { search: "İşletme, rota, il veya ilçe ara", allSports: "Tüm sporlar", allRegions: "Tüm iller", near: "İstanbul ve çevresi", list: "Liste", map: "Harita", results: "sonuç", onMap: "haritada {n} konum (bazı alanlar kesin konum yayımlamıyor)", none: "Bu filtrelere uyan bir yer bulunamadı.", reset: "Filtreleri temizle", more: "Daha fazla göster", view: "Görünüm", sport: "Spor", region: "İl" },
     map: { label: "Harita", open: "Rehberi aç →", you: "Senin konumun" },
     reports: { all: "Tümü", filter: "Spora göre filtrele", error: "Raporlar şu an yüklenemiyor. Biraz sonra tekrar deneyin.", empty: "Henüz rapor yok.", firstOne: "İlk raporu uygulamadan sen paylaşabilirsin.", more: "Daha fazla rapor", loading: "Yükleniyor…", likes: "beğeni", sample: "Örnek hesap", official: "Doğrulanmış resmi hesap", anonymous: "Unbound kullanıcısı", notFound: "Bu rapor bulunamadı ya da yayından kaldırılmış.", backAll: "Tüm raporlar", photo: "Fotoğraf", openGuide: "rehberini aç →", place: "Yer" },
     guideNote: null as string | null,
@@ -72,7 +72,7 @@ export const dict = {
     promo: { eyebrow: "Unbound App · Coming soon", title: "There's more in the mobile app", text: "Share your own activity reports with photos, follow other athletes, save the reports you like and get a heads-up when the weekend weather looks good. All in your pocket, with guides that work offline.", discover: "Discover the app →", soon: "Coming soon" },
     chips: { beginner: "Beginner friendly", tandem: "Tandem", tandemLong: "Tandem flights offered", nearIstanbul: "Near Istanbul" },
     card: { places: "places", guide: "beginner guide", tandemOffered: "Tandem flights offered" },
-    explorer: { search: "Search businesses, routes, provinces", allSports: "All sports", allRegions: "All regions", near: "Istanbul area", list: "List", map: "Map", results: "results", onMap: "{n} on the map (some sites don't publish an exact location)", none: "No places match these filters.", reset: "Clear filters", more: "Show more", view: "View", sport: "Sport", region: "Region" },
+    explorer: { search: "Search businesses, routes, provinces", allSports: "All sports", allRegions: "All provinces", near: "Istanbul area", list: "List", map: "Map", results: "results", onMap: "{n} on the map (some sites don't publish an exact location)", none: "No places match these filters.", reset: "Clear filters", more: "Show more", view: "View", sport: "Sport", region: "Province" },
     map: { label: "Map", open: "Open guide →", you: "Your location" },
     reports: { all: "All", filter: "Filter by sport", error: "Reports can't be loaded right now. Please try again shortly.", empty: "No reports yet.", firstOne: "You can share the first one from the app.", more: "More reports", loading: "Loading…", likes: "likes", sample: "Sample account", official: "Verified official account", anonymous: "Unbound user", notFound: "This report wasn't found or has been removed.", backAll: "All reports", photo: "Photo", openGuide: "Open the guide →", place: "Place" },
     guideNote: "Guides and reports are written in Turkish. Your browser's translate feature gives a quick English version." as string | null,

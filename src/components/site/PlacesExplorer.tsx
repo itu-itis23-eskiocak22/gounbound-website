@@ -49,7 +49,8 @@ export function PlacesExplorer({ lang = "tr", places, sports, initialSport, lock
     const pool = places.filter((p) => !sport || p.sport === sport);
     const counts = new Map<string, number>();
     pool.forEach((p) => p.region && counts.set(p.region, (counts.get(p.region) ?? 0) + 1));
-    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "tr")).map(([r]) => r);
+    // Alfabetik: 50'yi aşan il listesinde aranan şehir kolayca bulunsun; adet seçenekte gösterilir.
+    return [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0], "tr"));
   }, [places, sport]);
 
   const filtered = useMemo(() => {
@@ -71,31 +72,30 @@ export function PlacesExplorer({ lang = "tr", places, sports, initialSport, lock
   return (
     <div>
       <div className="rounded-3xl bg-white/70 border border-stone p-4 sm:p-5 flex flex-col gap-4">
-        <div className="flex flex-col md:flex-row gap-3">
-          <label className="relative flex-1">
+        <div className="grid grid-cols-2 md:flex gap-3">
+          <label className="relative col-span-2 md:flex-1">
             <span className="sr-only">{d.search}</span>
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" strokeLinecap="round" /></svg>
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={d.search}
-              className="w-full rounded-full bg-paper border border-stone pl-12 pr-4 py-3 outline-none focus:border-ink" />
+              type="search" enterKeyHint="search"
+              className="w-full rounded-full bg-paper border border-stone pl-12 pr-4 py-3 text-base outline-none focus:border-ink" />
           </label>
           {!lockSport && (
-            <select value={sport ?? ""} onChange={(e) => { setSport(e.target.value || undefined); setRegion(""); }} aria-label={d.sport}
-              className="rounded-full bg-paper border border-stone px-4 py-3 outline-none focus:border-ink">
+            <Select value={sport ?? ""} onChange={(v) => { setSport(v || undefined); setRegion(""); }} label={d.sport}>
               <option value="">{d.allSports}</option>
               {sports.map((s) => <option key={s} value={s}>{sportName(s, lang)}</option>)}
-            </select>
+            </Select>
           )}
-          <select value={region} onChange={(e) => setRegion(e.target.value)} aria-label={d.region}
-            className="rounded-full bg-paper border border-stone px-4 py-3 outline-none focus:border-ink md:max-w-[220px]">
+          <Select value={region} onChange={setRegion} label={d.region} className={`md:max-w-[240px] ${lockSport ? "col-span-2" : ""}`}>
             <option value="">{d.allRegions}</option>
             {hasNear && <option value={NEAR}>{d.near}</option>}
-            {regions.map((r) => <option key={r} value={r}>{r}</option>)}
-          </select>
+            {regions.map(([r, n]) => <option key={r} value={r}>{r} ({n})</option>)}
+          </Select>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Toggle on={beginner} set={setBeginner}>{c.beginner}</Toggle>
           {showTandem && <Toggle on={tandem} set={setTandem}>{c.tandemLong}</Toggle>}
-          <div className="ml-auto flex rounded-full bg-surface p-1" role="tablist" aria-label={d.view}>
+          <div className="ml-auto flex shrink-0 rounded-full bg-surface p-1" role="tablist" aria-label={d.view}>
             {(["list", "map"] as const).map((v) => (
               <button key={v} role="tab" aria-selected={view === v} onClick={() => setView(v)}
                 className={`rounded-full px-4 py-1.5 text-sm font-medium ${view === v ? "bg-ink text-paper" : "text-text-secondary"}`}>
@@ -117,7 +117,7 @@ export function PlacesExplorer({ lang = "tr", places, sports, initialSport, lock
           <button onClick={reset} className="btn-secondary mt-4">{d.reset}</button>
         </div>
       ) : view === "map" ? (
-        <PlacesMap lang={lang} places={filtered} className="h-[65vh] min-h-[420px]" />
+        <PlacesMap lang={lang} places={filtered} className="h-[60vh] min-h-[360px] md:h-[65vh] md:min-h-[420px]" />
       ) : (
         <>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -142,5 +142,19 @@ function Toggle({ on, set, children }: { on: boolean; set: (v: boolean) => void;
       className={`rounded-full px-4 py-2 text-sm font-medium border transition-colors ${on ? "bg-olive text-paper border-olive" : "border-stone text-text-secondary hover:border-ink hover:text-ink"}`}>
       {children}
     </button>
+  );
+}
+
+/** Yerel seçici; mobilde telefonun kendi listesi açılır. Ok işareti kenara yapışmasın diye özel çizilir. */
+function Select({ value, onChange, label, className = "", children }: { value: string; onChange: (v: string) => void; label: string; className?: string; children: React.ReactNode }) {
+  return (
+    <label className={`relative min-w-0 ${className}`}>
+      <span className="sr-only">{label}</span>
+      <select value={value} onChange={(e) => onChange(e.target.value)} aria-label={label}
+        className="w-full appearance-none truncate rounded-full bg-paper border border-stone pl-4 pr-10 py-3 text-base outline-none focus:border-ink">
+        {children}
+      </select>
+      <svg className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    </label>
   );
 }

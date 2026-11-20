@@ -7,6 +7,7 @@ export const LEGAL_LINKS = [
   { href: "/gizlilik/", label: "Gizlilik Politikası" },
   { href: "/kvkk/", label: "KVKK Aydınlatma Metni" },
   { href: "/hesap-silme/", label: "Hesap Silme" },
+  { href: "/gorsel-kaynaklari/", label: "Görsel Kaynakları" },
 ];
 
 /** Yasal sayfaların ortak çerçevesi: sade üst bar, okunaklı içerik sütunu, sayfalar arası bağlantılar. */

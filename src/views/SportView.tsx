@@ -56,7 +56,6 @@ export function SportView({ sport, lang }: { sport: Sport; lang: Lang }) {
             <a href="#mekanlar" className="rounded-full border border-paper/40 px-4 py-2 font-semibold hover:bg-paper/10">{c.placesBtn}</a>
             <a href="#raporlar" className="rounded-full border border-paper/40 px-4 py-2 font-semibold hover:bg-paper/10">{c.reportsBtn}</a>
           </div>
-          {sport.imageCaption && <p className="mt-8 text-xs text-paper/50">{sport.imageCaption}</p>}
         </div>
       </section>
 
